@@ -24,7 +24,7 @@ public class Utils
         return props.getProperty( key );
     }
     
-    public static ObjectMapper getObjectMapper()
+    public ObjectMapper getObjectMapper()
     {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false );

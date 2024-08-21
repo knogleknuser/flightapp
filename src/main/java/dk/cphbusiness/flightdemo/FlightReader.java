@@ -67,7 +67,8 @@ public class FlightReader
     
     public List< DTOs.FlightDTO > getFlightsFromFile( String filename ) throws IOException
     {
-        DTOs.FlightDTO[] flights = new Utils().getObjectMapper().readValue( Paths.get( filename ).toFile(), DTOs.FlightDTO[].class );
+        
+        DTOs.FlightDTO[] flights =  new Utils().getObjectMapper().readValue( Paths.get( filename ).toFile(), DTOs.FlightDTO[].class );
         
         List< DTOs.FlightDTO > flightList = Arrays.stream( flights ).toList();
         return flightList;

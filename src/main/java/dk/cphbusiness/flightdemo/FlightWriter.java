@@ -44,7 +44,7 @@ public class FlightWriter
         for ( int i = 0; i < numberOfRequests; i++ ) {
             urlString = String.format( urlString, new Utils().getPropertyValue( "aviation.key" ), limit, offset );
             URL url = new URL( urlString );
-            flights = Utils.getObjectMapper()
+            flights = new Utils().getObjectMapper()
                     .readValue( url, DTOs.FlightCollectionDTO.class );
             flightCollectionDTOList.add( flights );
             offset += limit;
@@ -58,7 +58,7 @@ public class FlightWriter
     
     private void jsonToFile( List< DTOs.FlightDTO > flightCollection, String fileName ) throws IOException
     {
-        Utils.getObjectMapper().writeValue( Paths.get( fileName ).toFile(), flightCollection );
+        new Utils().getObjectMapper().writeValue( Paths.get( fileName ).toFile(), flightCollection );
     }
     
 }
