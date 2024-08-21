@@ -31,7 +31,14 @@ public class AirlineFacts
         
         this.airlinesSet.addAll(
                 flightInfoList.stream()
-                        .map( flightInfo -> flightInfo.getAirline() )
+                        .map( flightInfo ->
+                              {
+                                  if ( flightInfo.getAirline() == null ) {
+                                      return "null";
+                                  }
+                                  
+                                  return flightInfo.getAirline();
+                              } )
                         .toList()
                                );
         
@@ -42,7 +49,7 @@ public class AirlineFacts
         return this.airlinesSet;
     }
     
-    private List< DTOs.FlightInfo > filterOutRelevantAirlines( String... airline )
+    protected List< DTOs.FlightInfo > filterOutRelevantAirlines( String... airline )
     {
         Set< String > inputAirlineSet = Arrays.stream( airline ).collect( Collectors.toSet() );
         
@@ -52,7 +59,7 @@ public class AirlineFacts
         
         return relevantAirlines;
     }
-    
+
 //    public Map< String, List< Duration > > getFlightDurationsByAirline( String... airline )
 //    {
 //        List< DTOs.FlightInfo > relevantAirlines = this.filterOutRelevantAirlines( airline );
@@ -118,12 +125,22 @@ public class AirlineFacts
 //                .collect( Collectors.toMap() );
 //
 //        return averageFlightDurationRes;
-    }
-    
-    public Map< String, Duration > calcTotalFlightDuration( String... airline )
-    {
-        
         return null;
     }
+    
+//    public Map< String, Duration > calcTotalFlightDuration( String... airline )
+//    {
+//        List< DTOs.FlightInfo > relevantAirlines = this.filterOutRelevantAirlines( airline );
+//
+//        Map< String, Duration > totalFlightDurationsByAirline = relevantAirlines.stream()
+//                .collect(
+//                        Collectors.groupingBy(
+//                                flightInfo -> flightInfo.getAirline(),
+//                                Collectors
+//                                             )
+//                        );
+//
+//        return totalFlightDurationsByAirline;
+//    }
     
 }

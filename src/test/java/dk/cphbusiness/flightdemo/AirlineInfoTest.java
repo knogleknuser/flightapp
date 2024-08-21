@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AirlineInfoTest
+class AirlineInfoTest
 {
     
     private static FlightReader reader = new FlightReader();
@@ -58,6 +58,36 @@ public class AirlineInfoTest
     }
     
     @Test
+    @DisplayName( "Airline Set" )
+    void pickOutRelevantAirlines()
+    {
+        List< DTOs.FlightInfo > relevantAirlines;
+        
+        String testString1;
+        String testString2;
+        
+        System.out.println();
+        System.out.println( "-----AIRLINE SET-----" );
+        
+        Set< String > airlines = airlineFacts.getAirlinesSet();
+        
+        testString1 = "China Airlines";
+        relevantAirlines = airlineFacts.filterOutRelevantAirlines( testString1 );
+        
+        assertEquals( testString1, relevantAirlines.get( 0 ).getAirline() );
+        assertEquals( 50, relevantAirlines.size() );
+        
+        testString2 = "ANA";
+        relevantAirlines = airlineFacts.filterOutRelevantAirlines( testString1, testString2 );
+        
+        assertEquals( testString2, relevantAirlines.get( 0 ).getAirline() );
+        assertEquals( testString1, relevantAirlines.get( 300 ).getAirline() );
+        assertEquals( 313, relevantAirlines.size() );
+        
+        System.out.println( airlines );
+    }
+    
+    @Test
     @DisplayName( "Average Airline Flight Time" )
     void averageFlightTime()
     {
@@ -66,11 +96,11 @@ public class AirlineInfoTest
         
         Set< String > airlines = airlineFacts.getAirlinesSet();
         
-        Map<String, Duration > averageFlightTime = airlineFacts.calcAverageFlightDuration( airlines.toArray( new String[ 0 ] ) );
+        Map< String, Duration > averageFlightTime = airlineFacts.calcAverageFlightDuration( airlines.toArray( new String[ 0 ] ) );
         
-        averageFlightTime.forEach( (k, v) -> {
-            System.out.println(k + " " + v.toSeconds() + " s");
-        });
+        averageFlightTime.forEach( ( k, v ) -> {
+            System.out.println( k + " " + v.toSeconds() + " s" );
+        } );
         
     }
     
