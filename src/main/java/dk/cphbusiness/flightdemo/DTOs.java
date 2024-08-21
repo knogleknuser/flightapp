@@ -12,7 +12,9 @@ import java.time.OffsetDateTime;
  *
  * @author: Thomas Hartmann
  */
-public class DTOs {
+public class DTOs
+{
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -20,10 +22,13 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class FlightCollectionDTO {
+    protected static class FlightCollectionDTO
+    {
+        
         private FlightDTO[] data;
+        
     }
-
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -31,15 +36,18 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class FlightDTO {
+    protected static class FlightDTO
+    {
+        
         private String flight_date;
         private String flight_status;
         private AirportTime departure;
         private AirportTime arrival;
         private AirplaneDTO flight;
         private AirlineDTO airline;
+        
     }
-
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -47,15 +55,18 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class AirportTime {
+    protected static class AirportTime
+    {
+        
         private String airport;
         private String timezone;
         private String iata;
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+        @JsonFormat( pattern = "yyyy-MM-dd'T'HH:mm:ssXXX" )
         private OffsetDateTime scheduled;
+        
     }
-
-
+    
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -63,11 +74,14 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class AirlineDTO {
+    protected static class AirlineDTO
+    {
+        
         private String name;
         private String iata;
+        
     }
-
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -75,11 +89,14 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class AirplaneDTO {
+    protected static class AirplaneDTO
+    {
+        
         private String number;
         private String iata;
+        
     }
-
+    
     @Getter
     @Setter
     @NoArgsConstructor
@@ -87,7 +104,9 @@ public class DTOs {
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
-    protected static class FlightInfo {
+    protected static class FlightInfo
+    {
+        
         private String name;
         private String iata;
         private String airline;
@@ -96,5 +115,7 @@ public class DTOs {
         private LocalDateTime arrival;
         private String origin;
         private String destination;
+        
     }
+    
 }

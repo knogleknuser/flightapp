@@ -14,18 +14,23 @@ import java.util.Properties;
  * Purpose: Utility class to read properties from a file
  * Author: Thomas Hartmann
  */
-public class Utils {
-
-    public String getPropertyValue(String key) throws IOException {
+public class Utils
+{
+    
+    public String getPropertyValue( String key ) throws IOException
+    {
         Properties props = new Properties();
-        props.load(FlightReader.class.getClassLoader().getResourceAsStream("config.properties"));
-        return props.getProperty(key);
+        props.load( FlightReader.class.getClassLoader().getResourceAsStream( "config.properties" ) );
+        return props.getProperty( key );
     }
-    public static ObjectMapper getObjectMapper() {
+    
+    public static ObjectMapper getObjectMapper()
+    {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.writer(new DefaultPrettyPrinter());
+        objectMapper.configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false );
+        objectMapper.registerModule( new JavaTimeModule() );
+        objectMapper.writer( new DefaultPrettyPrinter() );
         return objectMapper;
     }
+    
 }

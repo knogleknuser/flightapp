@@ -21,17 +21,19 @@ import java.util.*;
  *
  * @author: Thomas Hartmann
  */
-public class FlightReader {
-
-    public static void main(String[] args) {
+public class FlightReader
+{
+    
+    public static void main( String[] args )
+    {
         FlightReader flightReader = new FlightReader();
         try {
-            List<DTOs.FlightDTO> flightList = flightReader.getFlightsFromFile("flights.json");
-            List<DTOs.FlightInfo> flightInfoList = flightReader.getFlightInfoDetails(flightList);
-            flightInfoList.forEach(f->{
-                System.out.println("\n"+f);
-            });
-        } catch (IOException e) {
+            List< DTOs.FlightDTO > flightList = flightReader.getFlightsFromFile( "flights.json" );
+            List< DTOs.FlightInfo > flightInfoList = flightReader.getFlightInfoDetails( flightList );
+            flightInfoList.forEach( f -> {
+                System.out.println( "\n" + f );
+            } );
+        } catch ( IOException e ) {
             e.printStackTrace();
         }
     }
@@ -41,33 +43,35 @@ public class FlightReader {
 //        List<FlightDTO> flights = getObjectMapper().readValue(Paths.get(fileName).toFile(), List.class);
 //        return flights;
 //    }
-
-
-    public List<DTOs.FlightInfo> getFlightInfoDetails(List<DTOs.FlightDTO> flightList) {
-        List<DTOs.FlightInfo> flightInfoList = flightList.stream().map(flight -> {
-            Duration duration = Duration.between(flight.getDeparture().getScheduled(), flight.getArrival().getScheduled());
+    
+    
+    public List< DTOs.FlightInfo > getFlightInfoDetails( List< DTOs.FlightDTO > flightList )
+    {
+        List< DTOs.FlightInfo > flightInfoList = flightList.stream().map( flight -> {
+            Duration duration = Duration.between( flight.getDeparture().getScheduled(), flight.getArrival().getScheduled() );
             DTOs.FlightInfo flightInfo = DTOs.FlightInfo.builder()
-                    .name(flight.getFlight().getNumber())
-                    .iata(flight.getFlight().getIata())
-                    .airline(flight.getAirline().getName())
-                    .duration(duration)
-                    .departure(flight.getDeparture().getScheduled().toLocalDateTime())
-                    .arrival(flight.getArrival().getScheduled().toLocalDateTime())
-                    .origin(flight.getDeparture().getAirport())
-                    .destination(flight.getArrival().getAirport())
+                    .name( flight.getFlight().getNumber() )
+                    .iata( flight.getFlight().getIata() )
+                    .airline( flight.getAirline().getName() )
+                    .duration( duration )
+                    .departure( flight.getDeparture().getScheduled().toLocalDateTime() )
+                    .arrival( flight.getArrival().getScheduled().toLocalDateTime() )
+                    .origin( flight.getDeparture().getAirport() )
+                    .destination( flight.getArrival().getAirport() )
                     .build();
-
+            
             return flightInfo;
-        }).toList();
+        } ).toList();
         return flightInfoList;
     }
-
-    public List<DTOs.FlightDTO> getFlightsFromFile(String filename) throws IOException {
-        DTOs.FlightDTO[] flights = new Utils().getObjectMapper().readValue(Paths.get(filename).toFile(), DTOs.FlightDTO[].class);
-
-        List<DTOs.FlightDTO> flightList = Arrays.stream(flights).toList();
+    
+    public List< DTOs.FlightDTO > getFlightsFromFile( String filename ) throws IOException
+    {
+        DTOs.FlightDTO[] flights = new Utils().getObjectMapper().readValue( Paths.get( filename ).toFile(), DTOs.FlightDTO[].class );
+        
+        List< DTOs.FlightDTO > flightList = Arrays.stream( flights ).toList();
         return flightList;
     }
-
-
+    
+    
 }
