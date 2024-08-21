@@ -128,19 +128,31 @@ public class AirlineFacts
         return null;
     }
     
-//    public Map< String, Duration > calcTotalFlightDuration( String... airline )
-//    {
-//        List< DTOs.FlightInfo > relevantAirlines = this.filterOutRelevantAirlines( airline );
-//
-//        Map< String, Duration > totalFlightDurationsByAirline = relevantAirlines.stream()
-//                .collect(
-//                        Collectors.groupingBy(
-//                                flightInfo -> flightInfo.getAirline(),
-//                                Collectors
-//                                             )
-//                        );
-//
-//        return totalFlightDurationsByAirline;
-//    }
+    public Map< String, Duration > calcTotalFlightDuration( String... airline )
+    {
+        List< DTOs.FlightInfo > relevantAirlines = this.filterOutRelevantAirlines( airline );
+        
+        Map< String, Long > totalFlightDurationsByAirlineInSeconds = relevantAirlines.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                flightInfo -> flightInfo.getAirline(),
+                                Collectors.summingLong( flightInfo -> flightInfo.getDuration().toSeconds() )
+                                             )
+                        );
+        
+        Map< String, Duration > totalFlightDurationsByAirline = new TreeMap<>();
+        
+        
+        for ( Map.Entry< String, Long > stringSecondsEntry : totalFlightDurationsByAirlineInSeconds.entrySet() ) {
+            totalFlightDurationsByAirline.put(
+                    stringSecondsEntry.getKey(),
+                    Duration.of( stringSecondsEntry.getValue(), ChronoUnit.SECONDS )
+                                             );
+        }
+        
+        
+        
+        return totalFlightDurationsByAirline;
+    }
     
 }

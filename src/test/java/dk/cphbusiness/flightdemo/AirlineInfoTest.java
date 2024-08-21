@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,6 +109,22 @@ class AirlineInfoTest
     @DisplayName( "Total Airline Flight Time" )
     void totalFlightTime()
     {
+        System.out.println();
+        System.out.println( "-----TOTAL FLIGHT TIME-----" );
+        
+        Set< String > airlines = airlineFacts.getAirlinesSet();
+        
+        Map< String, Duration > totalFlightTime = airlineFacts.calcTotalFlightDuration( airlines.toArray( new String[ 0 ] ) );
+        
+        
+        totalFlightTime.forEach( ( k, v ) -> {
+             //TODO: Make this work
+            long hours = v.toSeconds() / ( 60 * 60 );
+            long minutes = v.toSeconds() % 60;
+            long seconds = v.toSeconds() % ( 60 * 60 );
+            
+            System.out.println( k + " " + hours + " h " + minutes + " v " + seconds + " s" );
+        } );
     }
     
     
