@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Purpose:
@@ -33,6 +34,7 @@ public class FlightReader
             flightInfoList.forEach( f -> {
                 System.out.println( "\n" + f );
             } );
+            flightReader.getCountFromIata( flightList );
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -43,7 +45,20 @@ public class FlightReader
 //        List<FlightDTO> flights = getObjectMapper().readValue(Paths.get(fileName).toFile(), List.class);
 //        return flights;
 //    }
-    
+    public void getCountFromIata ( List< DTOs.FlightDTO > flights ){
+        // Step 1: Count occurrences of each IATA code using a Map
+
+        long count =flights.stream()
+                .map(flight->flight.getFlight().getIata())
+                .filter(iata->"JL3681".equals(iata))
+                .count();
+        System.out.println(count);
+//                forEach(iata->System.out.println(iata));
+
+
+    }
+
+
     
     public List< DTOs.FlightInfo > getFlightInfoDetails( List< DTOs.FlightDTO > flightList )
     {
