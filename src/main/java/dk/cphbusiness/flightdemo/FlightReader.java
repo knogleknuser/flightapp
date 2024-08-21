@@ -34,11 +34,11 @@ public class FlightReader
             flightInfoList.forEach( f -> {
                 System.out.println("\n" + f);
             } );
+
             System.out.println("Now sorted by arrival time");
-            List< DTOs.FlightInfo > sortedArrivalList = flightReader.sortByArrival( flightList );
-            sortedArrivalList.forEach( f -> {
-                System.out.println("\n" + f);
-            });
+            List<DTOs.FlightInfo> sortedFlightInfoList = flightReader.sortByArrivalTime(flightInfoList);
+            sortedFlightInfoList.forEach(System.out::println);
+
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -99,6 +99,11 @@ public class FlightReader
         } ).sorted(Comparator.comparing(DTOs.FlightInfo::getArrival)).toList();
         return flightInfoList;
     }
-    
-    
+
+    public List< DTOs.FlightInfo > sortByArrivalTime( List< DTOs.FlightInfo > flights ) {
+        return flights.stream()
+                .sorted(Comparator.comparing(DTOs.FlightInfo::getArrival))
+                .collect(Collectors.toList());
+    }
+
 }
