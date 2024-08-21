@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class FlightWriter
 {
     
     private final String FLIGHT_URL = "https://api.aviationstack.com/v1/flights?access_key=%s&limit=%s&offset=%s";
-    private Utils utils = new Utils();
+    private final Utils utils = new Utils();
     
     /**
      * Method to write flights from the aviation stack API to a file
@@ -27,8 +28,8 @@ public class FlightWriter
      */
     public List< DTOs.FlightDTO > writeFlightsToFile( int numberOfRequests, int limit ) throws IOException
     {
-        List< DTOs.FlightDTO > result = urlReader( FLIGHT_URL, numberOfRequests, limit );
-        jsonToFile( result, "flightsfile.json" );
+        List< DTOs.FlightDTO > result = this.urlReader( this.FLIGHT_URL, numberOfRequests, limit );
+        this.jsonToFile( result, "flightsfile.json" );
         return result;
     }
     
@@ -43,23 +44,21 @@ public class FlightWriter
         for ( int i = 0; i < numberOfRequests; i++ ) {
             urlString = String.format( urlString, new Utils().getPropertyValue( "aviation.key" ), limit, offset );
             URL url = new URL( urlString );
-            flights = utils.getObjectMapper()
+            flights = Utils.getObjectMapper()
                     .readValue( url, DTOs.FlightCollectionDTO.class );
             flightCollectionDTOList.add( flights );
             offset += limit;
         }
         
         flightCollectionDTOList.forEach( flightCollectionDTO -> {
-            for ( DTOs.FlightDTO flightDTO : flightCollectionDTO.getData() ) {
-                flightDTOList.add( flightDTO );
-            }
+            Collections.addAll( flightDTOList, flightCollectionDTO.getData() );
         } );
         return flightDTOList;
     }
     
     private void jsonToFile( List< DTOs.FlightDTO > flightCollection, String fileName ) throws IOException
     {
-        utils.getObjectMapper().writeValue( Paths.get( fileName ).toFile(), flightCollection );
+        Utils.getObjectMapper().writeValue( Paths.get( fileName ).toFile(), flightCollection );
     }
     
 }
