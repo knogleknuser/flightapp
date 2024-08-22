@@ -100,7 +100,7 @@ public class DTOs
     @Getter
     @Setter
     @NoArgsConstructor
-    @ToString
+//    @ToString
     @AllArgsConstructor
     @Builder
     @EqualsAndHashCode
@@ -115,6 +115,21 @@ public class DTOs
         private LocalDateTime arrival;
         private String origin;
         private String destination;
+        
+        @Override
+        public String toString()
+        {
+            return "FlightInfo{" +
+                   "name='" + name + '\'' +
+                   ", iata='" + iata + '\'' +
+                   ", airline='" + airline + '\'' +
+                   ", duration=" + duration.toSeconds() +
+                   ", departure=" + departure +
+                   ", arrival=" + arrival +
+                   ", origin='" + origin + '\'' +
+                   ", destination='" + destination + '\'' +
+                   '}';
+        }
         
     }
     

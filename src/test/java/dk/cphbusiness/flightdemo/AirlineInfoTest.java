@@ -1,9 +1,11 @@
 package dk.cphbusiness.flightdemo;
 
+import dk.cphbusiness.utils.TimeUnitConverter;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
@@ -116,14 +118,11 @@ class AirlineInfoTest
         
         Map< String, Duration > totalFlightTime = airlineFacts.calcTotalFlightDuration( airlines.toArray( new String[ 0 ] ) );
         
-        
+        assertEquals( 1444800, totalFlightTime.get( "ANA" ).toSeconds() );
         totalFlightTime.forEach( ( k, v ) -> {
-             //TODO: Make this work
-            long hours = v.toSeconds() / ( 60 * 60 );
-            long minutes = v.toSeconds() % 60;
-            long seconds = v.toSeconds() % ( 60 * 60 );
             
-            System.out.println( k + " " + hours + " h " + minutes + " v " + seconds + " s" );
+            System.out.println( k + " <-> " + TimeUnitConverter.toPrettyString( v.toSeconds() ) );
+//            System.out.println( k + " <-> " +  v.toSeconds()  );
         } );
     }
     
